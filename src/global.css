@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:wght@300;400;700&family=Roboto+Mono:wght@300;400&display=swap');
+
+:root{
+    --bg: #F9F4E6;
+    --dark: #443020;
+    --clear: #FBF9FA;
+    --accent: #F1D881;
+    --hover: #755C3C;
+    --hover2: #BFAC91;
+    font-family: 'Poppins',sans-serif;
+    font-weight: 300;
+    color: var(--dark);
+}
+
+body{
+    margin: 0;
+    height: 100%;
+    background-color: var(--bg);
+}
+
+
+.title, .title:visited {
+    font-family: 'Poppins', sans-serif; 
+    font-variant-caps: small-caps;
+    text-decoration: none;
+    text-align: center;
+    color: var(--dark);
+}
+

@@ -1,0 +1,76 @@
+[
+    {
+        "id":0,
+        "title":"ProjectA",
+        "description":"ProjectA is cool, we've done a lot to make it happen",
+        "todo":[
+        {
+            "id":0,
+            "task":"Faire ci",
+            "done": false
+        },
+        {
+            "id":1,
+            "task":"Faire ça",
+            "done": false
+        },
+        {
+            "id":2,
+            "task":"Reflechir",
+            "done": true
+        }
+    ],
+        "deadline":"2022-12-22"
+    },
+    {
+        "id":1,
+        "title":"ProjectB",
+        "description":"ProjectB is nice, but what can we do better",
+        "todo":[
+        {
+            "id":0,
+            "task":"Faire ci",
+            "done": false
+        },
+        {
+            "id":1,
+            "task":"Faire ça",
+            "done": false
+        },
+        {
+            "id":2,
+            "task":"Ou bien..",
+            "done": false
+        }
+    ],
+        "deadline":"2022-12-23"
+    },
+    {
+        "id":2,
+        "title":"ProjectC",
+        "description":"ProjectC is something else",
+        "todo":[
+        {
+            "id":0,
+            "task":"Faire ci",
+            "done": false
+        },
+        {
+            "id":1,
+            "task":"Faire ça",
+            "done": true
+        },
+        {
+            "id":2,
+            "task":"Ou bien..",
+            "done": false
+        },
+        {
+            "id":3,
+            "task":"Hmmmm..",
+            "done": false
+        }
+    ],
+        "deadline":"2022-12-23"
+    }
+]
