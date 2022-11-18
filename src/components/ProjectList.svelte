@@ -1,6 +1,5 @@
 <script>
     export let projects;
-    console.log(projects[0]);
     import ProjectCard from "./ProjectCard.svelte";
     import Button from "./Button.svelte";
 </script>
@@ -10,13 +9,17 @@
         <h2>PROJECTS</h2>
         <Button>+</Button>
     </div>
+    {#if projects === null}
+    <div>
+        There is no project yet
+    </div>
+    {:else}
     <div class="project-list">
         {#each projects as project}
             <ProjectCard {project} />
         {/each}
     </div>
-    
-    
+    {/if}
 </div>
 
 <style>
