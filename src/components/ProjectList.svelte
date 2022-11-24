@@ -1,26 +1,63 @@
 <script>
-    export let projects;
     import ProjectCard from "./ProjectCard.svelte";
-    import Button from "./Button.svelte";
+    import ModalCreateProject from "./ModalCreateProject.svelte";
+    import { projectsCollection } from '../db/firebase';
+    import { onSnapshot } from "firebase/firestore";
+
+    let projs = [];
+    let showModal = false;
+    
+    const getAllDocs = onSnapshot(projectsCollection, (querySnapshot) => {
+        let firebaseProjects = [];
+        querySnapshot.forEach((doc) =>{
+            let project = {...doc.data(), id: doc.id}
+            firebaseProjects = [project, ...firebaseProjects]
+        });
+        projs = firebaseProjects;
+        console.table(projs);
+    })
+    
+/*
+    export async function load(){
+        const q = query(projectsCollection);
+        const querySnapshot = await getDocs(q);
+        let projs = [];
+        querySnapshot.forEach((doc) =>{
+            projs.push({...doc.data(), id: doc.id})
+        });
+        console.table(projs);
+        return {
+              status: 200,
+              props: {
+                  projs
+              }
+          }
+    }
+    */
+
+    //export let projects
 </script>
 
 <div class="projects">
     <div class="projects-handle">
         <h2>PROJECTS</h2>
-        <Button>+</Button>
+        <button class="btn" on:click="{() => showModal = true}">+</button>
     </div>
-    {#if projects === null}
+    {#if projs === null}
     <div>
-        There is no project yet
+        <p>There is no project yet</p>
     </div>
     {:else}
     <div class="project-list">
-        {#each projects as project}
-            <ProjectCard {project} />
+        {#each projs as project}
+            <ProjectCard id={project.id} title={project.title} description={project.description} deadline={project.deadline}/>
         {/each}
     </div>
     {/if}
 </div>
+{#if showModal}
+	<ModalCreateProject id={id} title={title} description={description} deadline={deadline} on:close="{() => showModal = false}"/>
+{/if}
 
 <style>
     .projects {
@@ -41,5 +78,26 @@
     .project-list{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+    .btn {
+        display: inline-block;
+        font-size: 22px;
+        background-color: var(--dark);
+        color: var(--clear);
+        border-radius: 8px;
+        border: 1.5px solid var(--clear);
+        transition: background-color 0.15s ease-in-out;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-weight:500;
+    }
+    .btn:hover{
+        background-color: var(--hover);
+        transition: background-color 0.25s ease-in-out;
+        
+    }
+    .btn:focus{
+        background-color: #9a7868;
+        transition: background-color 0.25s ease-in-out;
     }
 </style>

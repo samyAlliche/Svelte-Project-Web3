@@ -26,4 +26,12 @@ body{
     text-align: center;
     color: var(--dark);
 }
+.loader{
+    position: absolute;
+    left:50%;
+}
+.loader:first-child{
+    position: relative;
+    left:-50%;
+}
 

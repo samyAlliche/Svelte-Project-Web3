@@ -1,18 +1,14 @@
 <script>
-    export let todo;
+    import { toggleCompleted } from '../db/firebase';
+    export let todo, id;
+
 </script>
 
-<div class="todo">
+<div on::click={toggleCompleted(id, todo.id, todo.completed)} class="todo">
     <label class="checkbox" for={todo.id}>
-        {#if todo.done == false}
-            <input type="checkbox" name={todo.task} id={todo.id} class="checkbox__input" >
-            <div class="checkbox__box"></div>
-            <div class="task">{todo.task}</div>
-        {:else}
-            <input type="checkbox" name={todo.task} id={todo.id} class="checkbox__input" checked>
-            <div class="checkbox__box"></div>
-            <div class="task">{todo.task}</div>
-        {/if}
+            <input bind:checked={todo.completed}  type="checkbox" name={todo.task} id={todo.id} class="checkbox__input" >
+            <div  class="checkbox__box"></div>
+            <div  class="task">{todo.task}</div>
     </label>
     
 </div>

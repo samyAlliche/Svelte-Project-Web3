@@ -1,32 +1,21 @@
 <script>
-    export let nextTodoId;
-    import { createEventDispatcher } from "svelte";
+    import { addTodo } from '../db/firebase';
+    import { page } from '$app/stores';
 
-    const dispatch = createEventDispatcher();
-
+    const params = $page.params.id;
     let value = "";
+    
     function handleKeyUp({key}){
         if (key !== "Enter" || value.length === 0) return;
-        dispatch("newitem", value);
-        
-        const newToDo = {
-            "id":nextTodoId,
-            "task":value,
-            "done": false
-        }
-        
-       console.log(newToDo);
+        let task = value;
+        addTodo(params, task);
         value = "";
-        //const formData = new FormData(e.target);
-
-        
-        //console.log(formData);
     }
 
 
 </script>
 
-<input type="text" on:keyup={handleKeyUp} bind:value class="add-note" placeholder="✎  Add a new task"/>
+<input type="text" on:keyup={handleKeyUp} bind:value={value} class="add-note" placeholder="✎  Add a new task"/>
 
 <style>
     .add-note__form {
