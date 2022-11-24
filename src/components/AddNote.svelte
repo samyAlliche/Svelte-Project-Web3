@@ -1,6 +1,9 @@
 <script>
     import { addTodo } from '../db/firebase';
     import { page } from '$app/stores';
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+    const refresh = () => dispatch('refresh');
 
     const params = $page.params.id;
     let value = "";
@@ -10,6 +13,7 @@
         let task = value;
         addTodo(params, task);
         value = "";
+        refresh();
     }
 
 

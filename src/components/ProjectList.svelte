@@ -56,7 +56,7 @@
     {/if}
 </div>
 {#if showModal}
-	<ModalCreateProject id={id} title={title} description={description} deadline={deadline} on:close="{() => showModal = false}"/>
+	<ModalCreateProject on:close="{() => showModal = false}"/>
 {/if}
 
 <style>

@@ -1,12 +1,15 @@
 <script>
     import ToDo from "/src/components/ToDo.svelte";
     import { getTodos } from '/src/db/firebase';
+    import { Moon } from 'svelte-loading-spinners';
     export let id;
     let todos = getTodos(id);
 
 </script>
 {#await todos}
-    <p>Loading...</p>
+    <div class="loader">
+        <Moon size="60" color="#443020" unit="px" duration="1s" />
+    </div>
 {:then todos}
     <div class="project-todos">
         {#each todos as todo}

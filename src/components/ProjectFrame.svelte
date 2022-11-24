@@ -6,6 +6,7 @@
 	import DotSeparator from "./DotSeparator.svelte";
 
 	let showModal = false;
+    let refreshTodos = 0;
 
     const timeLeft =  Math.ceil(Math.abs(new Date(deadline.toDate()) - new Date())/(1000*3600*24));
 
@@ -24,8 +25,10 @@
     </div>
     
     <div class="pf-description">"{description}"</div>
+    {#key refreshTodos}
     <ToDos id={id}/>
-    <AddNote/>
+    {/key}
+    <AddNote on:refresh="{() => refreshTodos++}"/>
 </div>
 {#if showModal}
 	<ModalEditProject id={id} title={title} description={description} deadline={deadline} on:close="{() => showModal = false}"/>
