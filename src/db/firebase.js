@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, doc, getDoc, getDocs, orderBy, query, addDoc, Timestamp, updateDoc, getCountFromServer } from "firebase/firestore";
+import { getFirestore, collection, doc, getDoc, getDocs, orderBy, query, addDoc, Timestamp, updateDoc, getCountFromServer, deleteDoc } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -37,7 +37,7 @@ async function getProject(id) {
     console.log("Document data:", docSnap.data());
     return docSnap.data()
   } else {
-    console.log("No such document!");
+    console.error("No such document!");
   }
 }
 
@@ -91,6 +91,10 @@ async function createProject(title, description, deadline){
   console.log("Document created with ID: ", docRef.id);
 }
 
+async function deleteProject(projId){
+  await deleteDoc(doc(db, "projects", projId));
+  console.log("project " + projId + " deleted");
+}
 //make a svelte form with 2 text input and a date input?
 
 export{
@@ -103,7 +107,8 @@ export{
   toggleCompleted,
   countTodos,
   editProject,
-  createProject
+  createProject,
+  deleteProject
 }
 
 
