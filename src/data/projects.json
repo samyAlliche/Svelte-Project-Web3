@@ -12,7 +12,7 @@
         {
             "id":1,
             "task":"Faire ça",
-            "done": false
+            "done": true
         },
         {
             "id":2,
