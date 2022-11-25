@@ -1,12 +1,14 @@
 <script>
     import ProjectCard from "./ProjectCard.svelte";
     import ModalCreateProject from "./ModalCreateProject.svelte";
-    import { projectsCollection } from '../db/firebase';
+    import { getProjects, projectsCollection } from '../db/firebase';
     import { onSnapshot } from "firebase/firestore";
+    import { Moon } from 'svelte-loading-spinners';
 
-    let projs = [];
+    let projs = getProjects();
     let showModal = false;
     
+    /*
     const getAllDocs = onSnapshot(projectsCollection, (querySnapshot) => {
         let firebaseProjects = [];
         querySnapshot.forEach((doc) =>{
@@ -16,48 +18,38 @@
         projs = firebaseProjects;
         console.table(projs);
     })
-    
-/*
-    export async function load(){
-        const q = query(projectsCollection);
-        const querySnapshot = await getDocs(q);
-        let projs = [];
-        querySnapshot.forEach((doc) =>{
-            projs.push({...doc.data(), id: doc.id})
-        });
-        console.table(projs);
-        return {
-              status: 200,
-              props: {
-                  projs
-              }
-          }
-    }
     */
 
-    //export let projects
 </script>
 
-<div class="projects">
-    <div class="projects-handle">
-        <h2>PROJECTS</h2>
-        <button class="btn" on:click="{() => showModal = true}">+</button>
+{#await projs}
+    <div class="loader">
+        <Moon size="60" color="#443020" unit="px" duration="1s" />
     </div>
-    {#if projs === null}
-    <div>
-        <p>There is no project yet</p>
+{:then projs}
+    <div class="projects">
+        <div class="projects-handle">
+            <h2>PROJECTS</h2>
+            <button class="btn" on:click="{() => showModal = true}">+</button>
+        </div>
+        {#if projs === null}
+        <div>
+            <p>There is no project yet</p>
+        </div>
+        {:else}
+        <div class="project-list">
+            {#each projs as project}
+                <ProjectCard id={project.id} title={project.title} description={project.description} deadline={project.deadline}/>
+            {/each}
+        </div>
+        {/if}
     </div>
-    {:else}
-    <div class="project-list">
-        {#each projs as project}
-            <ProjectCard id={project.id} title={project.title} description={project.description} deadline={project.deadline}/>
-        {/each}
-    </div>
+    {#if showModal}
+        <ModalCreateProject on:close="{() => showModal = false}"/>
     {/if}
-</div>
-{#if showModal}
-	<ModalCreateProject on:close="{() => showModal = false}"/>
-{/if}
+{:catch error}
+    {console.log(error)}
+{/await}
 
 <style>
     .projects {

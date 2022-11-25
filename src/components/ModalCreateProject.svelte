@@ -12,6 +12,7 @@
     function handleSubmit(){
         let newDate = new Date(deadline);
         let deadlineTs = Timestamp.fromDate(newDate);
+        console.log(title, description, deadlineTs);
         createProject(title, description, deadlineTs);
     }
 

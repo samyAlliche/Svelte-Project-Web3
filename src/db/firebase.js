@@ -21,6 +21,15 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const projectsCollection = collection(db, "projects");
 
+async function getProjects() {
+  let firebaseProjects = [];
+  const querySnapshot = await getDocs(projectsCollection);
+  querySnapshot.forEach((doc) => {
+    let project = {...doc.data(), id: doc.id}
+    firebaseProjects = [project, ...firebaseProjects]
+  });
+  return firebaseProjects;
+}
 
 async function getProject(id) {
   const docSnap = await getDoc(doc(db, "projects", id));
@@ -87,6 +96,7 @@ async function createProject(title, description, deadline){
 export{
   db,
   projectsCollection,
+  getProjects,
   getProject,
   getTodos,
   addTodo,
