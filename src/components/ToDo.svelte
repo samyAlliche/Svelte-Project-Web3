@@ -1,18 +1,21 @@
 <script>
     import { toggleCompleted } from '../db/firebase';
-    export let todo, id;
+    export let task, completed, todoId, id;
+    console.log("completed", completed)
+    function handleChange(){
+        console.log("toggled completed a task", completed)
+        toggleCompleted(id, todoId, completed)
+    }
 
 </script>
 
-<div on::click={toggleCompleted(id, todo.id, todo.completed)} class="todo">
-    <label class="checkbox" for={todo.id}>
-            <input bind:checked={todo.completed}  type="checkbox" name={todo.task} id={todo.id} class="checkbox__input" >
+<div class="todo">
+    <label class="checkbox" for={todoId}>
+            <input type="checkbox" bind:checked={completed} name={task} id={todoId} class="checkbox__input" on:change={() => handleChange()}/>
             <div  class="checkbox__box"></div>
-            <div  class="task">{todo.task}</div>
+            <div  class="task">{task}</div>
     </label>
-    
 </div>
-
 <style>
     .checkbox{
         display: inline-flex;

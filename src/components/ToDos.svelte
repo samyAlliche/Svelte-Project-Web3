@@ -13,7 +13,7 @@
 {:then todos}
     <div class="project-todos">
         {#each todos as todo}
-            <ToDo id={id} todo={todo} />
+            <ToDo id={id} todoId={todo.id} task={todo.task} completed={todo.completed} />
         {/each}
     </div>
 {:catch error}

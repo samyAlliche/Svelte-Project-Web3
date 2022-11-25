@@ -57,7 +57,7 @@ async function toggleCompleted(projId, todoId, completed){
   const completedRef = doc(db, "projects", projId, "todos", todoId);
   console.log("toggled a todo")
   await updateDoc(completedRef, {
-    completed: !completed
+    completed: completed
   })
 }
 

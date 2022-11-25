@@ -2,6 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
     import { editProject } from '../db/firebase'
     import { Timestamp } from "firebase/firestore";
+    import {fly} from 'svelte/transition';
     export let id, title, description, deadline;
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch('close');
@@ -18,7 +19,7 @@
 
 <div class="modal-background" on:click={close}></div>
 
-<div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
+<div class="modal" role="dialog" aria-modal="true" bind:this={modal} in:fly={{ y:50, duration: 500}} out:fly={{duration: 500}}>
 	<button class="btn" on:click={close}>x</button>
     <h2>Edit project</h2>
     <form class="form-editproject" on:submit={handleSubmit}>
@@ -79,24 +80,23 @@
 	.btn {
         display: inline-block;
         font-size: 16px;
-        background-color: var(--dark);
-        color: var(--clear);
+        color: var(--dark);
         border-radius: 8px;
-        border: 1.5px solid var(--clear);
-        transition: background-color 0.15s ease-in-out;
+        border: 1.5px solid transparent;
+        transition: color 0.15s ease-in-out;
         padding-left: 5px;
         padding-right: 5px;
         font-weight:500;
         float:right;
     }
     .btn:hover{
-        background-color: var(--hover);
-        transition: background-color 0.25s ease-in-out;
+        color: var(--hover);
+        transition: color 0.25s ease-in-out;
         
     }
     .btn:focus{
-        background-color: #9a7868;
-        transition: background-color 0.25s ease-in-out;
+        color: var(--hover);
+        transition: color 0.25s ease-in-out;
     }
     .btn-div{
         display: flex;

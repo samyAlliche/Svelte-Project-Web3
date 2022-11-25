@@ -3,12 +3,12 @@
 </script>
 
 <nav class="navbar">
-    <a href="/" class="title"><h1>svelte project manager</h1></a>
+    <a href="/" class="title"><h1>svelte project manager ☕</h1></a>
     
 </nav>
 
 <svelte:head>
-    <title>Svelte Project Manager</title>
+    <title>Svelte Project Manager ☕</title>
 </svelte:head>
   
 <slot></slot>
