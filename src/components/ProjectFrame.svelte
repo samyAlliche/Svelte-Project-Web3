@@ -32,7 +32,7 @@
     
     <div class="pf-description">"{description}"</div>
     {#key refreshTodos}
-    <ToDos id={id}/>
+    <ToDos id={id} on:refresh="{() => refreshTodos++}"/>
     {/key}
     <AddNote on:refresh="{() => refreshTodos++}"/>
 </div>

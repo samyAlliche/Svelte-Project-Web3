@@ -1,9 +1,16 @@
 <script>
     import { toggleCompleted } from '../db/firebase';
+    import { createEventDispatcher } from 'svelte';
     export let task, completed, todoId, id;
-    console.log("completed", completed)
+    import ModalDeleteTodo from './ModalDeleteTodo.svelte';
+    
+	const dispatch = createEventDispatcher();
+    const refresh = () => dispatch('refresh');
+
+    let showModalTodoDelete = false;
+    let deleteTodoSubmitted = true;
+
     function handleChange(){
-        console.log("toggled completed a task", completed)
         toggleCompleted(id, todoId, completed)
     }
 
@@ -11,11 +18,20 @@
 
 <div class="todo">
     <label class="checkbox" for={todoId}>
+            <button class="delete-button" on:click="{() => showModalTodoDelete = true}">
+	            🗑️
+            </button>
             <input type="checkbox" bind:checked={completed} name={task} id={todoId} class="checkbox__input" on:change={() => handleChange()}/>
             <div  class="checkbox__box"></div>
             <div  class="task">{task}</div>
     </label>
+
 </div>
+
+{#if showModalTodoDelete}
+	<ModalDeleteTodo id={id} todoId={todoId}  on:close="{() => showModalTodoDelete = false}" on:submitted="{() => deleteTodoSubmitted = true}" on:refresh="{() => refresh()}"/>
+{/if}
+
 <style>
     .checkbox{
         display: inline-flex;

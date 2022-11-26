@@ -2,8 +2,12 @@
     import ToDo from "/src/components/ToDo.svelte";
     import { getTodos } from '/src/db/firebase';
     import { Moon } from 'svelte-loading-spinners';
+    import { createEventDispatcher } from 'svelte';
     export let id;
     let todos = getTodos(id);
+
+    const dispatch = createEventDispatcher();
+    const refresh = () => dispatch('refresh');
 
 </script>
 {#await todos}
@@ -13,7 +17,7 @@
 {:then todos}
     <div class="project-todos">
         {#each todos as todo}
-            <ToDo id={id} todoId={todo.id} task={todo.task} completed={todo.completed} />
+            <ToDo id={id} todoId={todo.id} task={todo.task} completed={todo.completed} on:refresh="{() => refresh()}"/>
         {/each}
     </div>
 {:catch error}
