@@ -1,12 +1,8 @@
 <script>
 	import DotSeparator from "./DotSeparator.svelte";
-    import { createEventDispatcher } from "svelte";
     import { countTodos } from '../db/firebase';
 
     export let id, title, description, deadline;
-
-    //const dispatcher = createEventDispatcher();
-    //console.log(deadline.toDate());
 
     const timeLeft =  Math.ceil(Math.abs(new Date(deadline.toDate()) - new Date())/(1000*3600*24));
 
