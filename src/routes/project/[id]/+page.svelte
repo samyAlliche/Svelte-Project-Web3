@@ -5,31 +5,25 @@
     import ProjectFrame from '/src/components/ProjectFrame.svelte';
     import {fly} from 'svelte/transition';
     import { getProject } from '/src/db/firebase';
-    import { Moon } from 'svelte-loading-spinners';
 
     
     import { page } from '$app/stores';
-    console.log($page.params)
     const params = $page.params.id;
 
-    let project = getProject(params);
+    let refreshProj = 0;
 
 </script>
 
-{#await project}
-    <div class="loader">
-        <Moon size="60" color="#443020" unit="px" duration="1s" />
-    </div>
-{:then project}
+
     <div class="container" in:fly={{ y:50, duration: 500, delay: 500}} out:fly={{duration: 500}}>
         <a href="/" class="back-btn">
             <Button>⬅ BACK</Button>
         </a>
-        <ProjectFrame id={params} title={project.title} description={project.description} deadline={project.deadline}/>
+        {#key refreshProj}
+        <ProjectFrame id={params} on:submitted="{() => refreshProj++}"/>
+        {/key}
     </div>
-{:catch error}
-    {console.log(error)}
-{/await}
+
 
 
 <style>

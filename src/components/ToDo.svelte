@@ -18,13 +18,13 @@
 
 <div class="todo">
     <label class="checkbox" for={todoId}>
-            <button class="delete-button" on:click="{() => showModalTodoDelete = true}">
-	            🗑️
-            </button>
             <input type="checkbox" bind:checked={completed} name={task} id={todoId} class="checkbox__input" on:change={() => handleChange()}/>
             <div  class="checkbox__box"></div>
             <div  class="task">{task}</div>
     </label>
+    <button class="delete-button" on:click="{() => showModalTodoDelete = true}">
+        🗑️
+    </button>
 
 </div>
 
@@ -39,6 +39,11 @@
         cursor: pointer;
         user-select: none;
         margin-bottom: 2px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 22rem;
+        
     }
     .checkbox__input {
         display: none;
@@ -71,5 +76,30 @@
     .checkbox__input:checked + .task{
         text-decoration: line-through;
 
+    }
+    .delete-button{
+        background-color: transparent;
+        border-color: transparent;
+        display: inline-block;
+        float: right;
+        border-radius: 8px;
+    }
+    .delete-button:hover{
+        background-color: var(--hover);
+        border-color: transparent;
+        display: inline-block;
+        float: right;
+    }
+    .todo{
+        width: 24rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .task{
+        width: fit-content;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 </style>

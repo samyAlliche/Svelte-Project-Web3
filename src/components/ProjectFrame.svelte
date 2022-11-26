@@ -4,21 +4,31 @@
     import ModalEditProject from './ModalEditProject.svelte';
     import ModalDeleteProject from './ModalDeleteProject.svelte';
 	import DotSeparator from "./DotSeparator.svelte";
-    export let id, title, description, deadline;
+    import { createEventDispatcher } from 'svelte';
+    import { getProject } from '/src/db/firebase';
+    import { Moon } from 'svelte-loading-spinners';
+	import ProjectDeadline from "./ProjectDeadline.svelte";
+    const dispatch = createEventDispatcher();
+	const submitted = () => dispatch('submitted');
+    export let id;
 
+    let project = getProject(id);
 	let showModalEdit = false;
     let showModalDelete = false;
     let deleteSubmitted = true;
     let refreshTodos = 0;
 
-    const timeLeft =  Math.ceil(Math.abs(new Date(deadline.toDate()) - new Date())/(1000*3600*24));
-
 
 </script>
+{#await project}
+    <div class="loader">
+        <Moon size="60" color="#443020" unit="px" duration="1s" />
+    </div>
+{:then project}
 <div class="project-frame">
     <div class="pf-handle">
         <div class="pf-tb">
-            <div class="pf-title">{title}</div>
+            <div class="pf-title">{project.title}</div>
             <DotSeparator/>
             <button class="edit-button" on:click="{() => showModalEdit = true}">
 	            ✏️
@@ -27,21 +37,24 @@
 	            🗑️
             </button>
         </div>
-        <div class="pf-deadline">{deadline.toDate().toDateString()} ({timeLeft} days left)</div>
+        <ProjectDeadline deadline={project.deadline} />
     </div>
     
-    <div class="pf-description">"{description}"</div>
+    <div class="pf-description">"{project.description}"</div>
     {#key refreshTodos}
     <ToDos id={id} on:refresh="{() => refreshTodos++}"/>
     {/key}
     <AddNote on:refresh="{() => refreshTodos++}"/>
 </div>
 {#if showModalEdit}
-	<ModalEditProject id={id} title={title} description={description} deadline={deadline} on:close="{() => showModalEdit = false}"/>
+	<ModalEditProject id={id} title={project.title} description={project.description} deadline={project.deadline} on:close="{() => showModalEdit = false}" on:submitted="{() => submitted()}"/>
 {/if}
 {#if showModalDelete}
 	<ModalDeleteProject id={id} on:close="{() => showModalDelete = false}" on:submitted="{() => deleteSubmitted = true}"/>
 {/if}
+{:catch error}
+    {console.log(error)}
+{/await}
 
 <style>
     .project-frame{
@@ -68,14 +81,6 @@
         font-size: 2rem;
         font-variant-caps:all-petite-caps;
         color: #443020;
-    }
-    .pf-deadline{
-        display:inline-block;
-        color: gray;
-        padding: 1rem;
-        font-size: 0.95rem;
-        font-family: 'Roboto Mono', monospace;
-        font-weight: 300;
     }
     .pf-description{
         font-style: italic;

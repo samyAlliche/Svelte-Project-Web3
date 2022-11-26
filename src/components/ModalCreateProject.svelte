@@ -3,7 +3,6 @@
     import { createProject } from '../db/firebase'
     import { Timestamp } from "firebase/firestore";
     import {fly} from 'svelte/transition';
-    import { goto } from '$app/navigation';
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch('close');
     const submitted = () => dispatch('submitted');

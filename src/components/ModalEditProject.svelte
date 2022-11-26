@@ -6,6 +6,7 @@
     export let id, title, description, deadline;
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch('close');
+    const submitted = () => dispatch('submitted');
     const today = new Date();
 	let modal;
     let deadlineDate = deadline.toDate();
@@ -14,6 +15,8 @@
         let newDate = new Date(deadlineDate);
         let deadlineTs = Timestamp.fromDate(newDate);
         editProject(id, title, description, deadlineTs);
+        submitted();
+        close();
     }
 </script>
 
@@ -36,7 +39,7 @@
             <input type="date" min={today} bind:value={deadlineDate} id="deadline"/>
         </div>
         <div class="btn-div">
-            <button class="submit-btn" type="submit">Edit</button>
+            <button class="submit-btn" type="button" on:click={handleSubmit}>Edit</button>
         </div>
         
     </form>
