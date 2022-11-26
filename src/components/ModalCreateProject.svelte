@@ -3,8 +3,10 @@
     import { createProject } from '../db/firebase'
     import { Timestamp } from "firebase/firestore";
     import {fly} from 'svelte/transition';
+    import { goto } from '$app/navigation';
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch('close');
+    const submitted = () => dispatch('submitted');
     const today = new Date();
 	let modal;
     let title, description, deadline;
@@ -13,7 +15,10 @@
         let newDate = new Date(deadline);
         let deadlineTs = Timestamp.fromDate(newDate);
         console.log(title, description, deadlineTs);
+        
         createProject(title, description, deadlineTs);
+        submitted();
+        close();
     }
 
 </script>
@@ -37,7 +42,7 @@
             <input type="date" min={today} bind:value={deadline} id="deadline"/>
         </div>
         <div class="btn-div">
-            <button class="submit-btn" type="submit">Submit</button>
+            <button class="submit-btn" type="button" on:click={handleSubmit}>Submit</button>
         </div>
         
     </form>

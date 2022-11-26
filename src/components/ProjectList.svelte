@@ -1,25 +1,15 @@
 <script>
     import ProjectCard from "./ProjectCard.svelte";
     import ModalCreateProject from "./ModalCreateProject.svelte";
-    import { getProjects, projectsCollection } from '../db/firebase';
-    import { onSnapshot } from "firebase/firestore";
+    import { getProjects } from '../db/firebase';
     import { Moon } from 'svelte-loading-spinners';
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+	const submitted = () => dispatch('submitted');
 
     let projs = getProjects();
     let showModal = false;
     
-    /*
-    const getAllDocs = onSnapshot(projectsCollection, (querySnapshot) => {
-        let firebaseProjects = [];
-        querySnapshot.forEach((doc) =>{
-            let project = {...doc.data(), id: doc.id}
-            firebaseProjects = [project, ...firebaseProjects]
-        });
-        projs = firebaseProjects;
-        console.table(projs);
-    })
-    */
-
 </script>
 
 {#await projs}
@@ -45,7 +35,7 @@
         {/if}
     </div>
     {#if showModal}
-        <ModalCreateProject on:close="{() => showModal = false}"/>
+        <ModalCreateProject on:close="{() => showModal = false}" on:submitted="{submitted}"/>
     {/if}
 {:catch error}
     {console.log(error)}
