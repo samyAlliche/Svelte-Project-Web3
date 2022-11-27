@@ -1,38 +1,25 @@
-# create-svelte
+# Svelte Project Manager
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+A project manager with to-do list functions made with Svelte and Firebase. The aim of this web app is to help groups managing their project and what left needs to be done for it
 
-## Creating a project
+Architecture: MPA, CSR
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Start
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+To start the web app:
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
+npm install
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+## ! PS !
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Make sure you have the last version of Node.js installed !
+
+## Reused codes
+
+| Where  | Author of the reused code | URL where the code is available | Reason we used it |
+| ------ | ------------------------- | ------------------------------- | ----------------- |
+| `/src/components/Modal*.svelte` (All the modals)  | Svelte | https://svelte.dev/examples/modal | We were not sure how to implement a modal in Svelte |
